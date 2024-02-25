@@ -1,7 +1,7 @@
 export default function Sorted(){
     return(
-        <div class="sort">
-            <div class="sort__label">
+        <div className="sort">
+            <div className="sort__label">
             <svg
                 width="10"
                 height="6"
@@ -17,7 +17,7 @@ export default function Sorted(){
             <b>Сортировка по:</b>
             <span>популярности</span>
             </div>
-            <div class="sort__popup">
+            <div className="sort__popup">
             <ul>
                 <li>популярности</li>
                 <li>цене</li>
