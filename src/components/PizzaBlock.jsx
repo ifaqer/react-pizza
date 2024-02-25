@@ -1,28 +1,34 @@
 import React from "react"
 
-export default function PizzaBlock(){
+export default function PizzaBlock({id, imageUrl, title, types, sizes, price, category, rating}){
     const [count, setCount] = React.useState(0)
+    const [activeType, setActiveType] = React.useState(0)
+    const [activeSize, setActiveSize] = React.useState(0)
+
     return(
         <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-            />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <img className="pizza-block__image" src={imageUrl} alt="Pizza"/>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
-                <ul>
-                <li>тонкое</li>
-                <li>традиционное</li>
+                <ul>{types.map((type, index)=>(
+                    <li
+                        className={index == activeType ? "active" :  ''}
+                        onClick={()=>setActiveType(index)}>
+                        {type == 0 ? "тонкое" :  "традиционное"}
+                    </li>
+                    ))}
                 </ul>
-                <ul>
-                <li>26 см.</li>
-                <li>30 см.</li>
-                <li>40 см.</li>
+                <ul>{sizes.map((s, index)=>(
+                    <li
+                        className={index == activeSize ? "active"  : ''}
+                        onClick={()=>setActiveSize(index)}>
+                        {s} см.
+                    </li>
+                    ))}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от 395 ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add" onClick={()=>setCount((prev)=>prev+1)}>
                 <svg
                     width="12"

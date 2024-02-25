@@ -1,9 +1,13 @@
 import React from 'react'
 import './scss/app.scss'
+
 import Header from './components/Header'
 import Sorted from './components/Sorted'
 import Categories from './components/Categories'
+import pizzas from './assets/pizzas.json'
 import PizzaBlock from './components/PizzaBlock'
+
+// rafc - создать быстро компонент!
 
 export default function App() {
   return (
@@ -17,7 +21,9 @@ export default function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock/>
+            {pizzas.map((obj, index)=>(
+              <PizzaBlock {...obj} key={index}/>
+            ))}
           </div>
         </div>
       </div>
