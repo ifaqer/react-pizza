@@ -17,15 +17,15 @@ export default function Home(){
     <div className="content__top">
         <Categories/>
         <Sorted/>
-        </div>
-        <h2 className="content__title">Все пиццы</h2>
-        <div className="content__items">
-        {
+    </div>
+    <h2 className="content__title">Все пиццы</h2>
+    <div className="content__items">
+    {
         isLoading ? [...new Array(8)].map((_, index)=><Skeleton key={index}/>) :
         (pizzas.map((obj, index)=>(
             <PizzaBlock {...obj} key={obj.id}/>
         )))
-        }
+    }
     </div>
     </>
   )
