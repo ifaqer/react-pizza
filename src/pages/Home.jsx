@@ -7,11 +7,13 @@ import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 
 export default function Home(){
+
     const [enterCategories, setEnterCategories] = React.useState(0)
     const [enterSorted, setEnterSorted] = React.useState('rating')
-    console.log(enterCategories + ' ' + enterSorted)
+
     const [pizzas, setPizzas] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
+
     React.useEffect(()=>{
         setIsLoading(true)
         Axios.get(`https://65db02b53ea883a15290ffe7.mockapi.io/items` +
@@ -21,6 +23,7 @@ export default function Home(){
             setIsLoading(false)
         })
     }, [enterCategories, enterSorted])
+
   return (
     <>
     <div className="content__top">
@@ -31,7 +34,7 @@ export default function Home(){
     <div className="content__items">
     {
         isLoading ? [...new Array(8)].map((_, index)=><Skeleton key={index}/>) :
-        (pizzas.map((obj, index)=>(
+        (pizzas.map((obj)=>(
             <PizzaBlock {...obj} key={obj.id}/>
         )))
     }

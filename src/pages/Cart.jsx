@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 
-const Cart = () => {
+export default function Cart(){
   return (
     <div class="content">
         <div class="container container--cart">
@@ -24,6 +24,7 @@ const Cart = () => {
                 <span>Очистить корзину</span>
               </div>
             </div>
+
             <div class="content_items">
               <div class="cart__item">
                 <div class="cart__item-img">
@@ -63,6 +64,7 @@ const Cart = () => {
                 </div>
               </div>
             </div>
+            
           <div class="cart__bottom">
               <div class="cart__bottom-details">
                 <span> Всего пицц: <b>3 шт.</b> </span>
@@ -86,5 +88,3 @@ const Cart = () => {
     </div>
   )
 }
-
-export default Cart
