@@ -1,12 +1,21 @@
 import React from "react"
 
-export default function Sorted(){
+export default function Sorted({setEnterSorted}){
     const [open, setOpen] = React.useState(false)
     const list = ["популярности", "цене", "алфавиту"]
     const [categories, setCategories] = React.useState(list[0])
     const useCategories  = (value) =>  {
+        if (value == "популярности"){
+            setEnterSorted('rating')
+            setCategories("популярности")
+        } else if (value == "цене"){
+            setEnterSorted('price')
+            setCategories("цене")
+        } else {
+            setEnterSorted('title')
+            setCategories("алфавиту")
+        }
         setOpen(!open)
-        setCategories(value)
     }
     return(
         <div className="sort">
@@ -28,7 +37,9 @@ export default function Sorted(){
             </div>
             {open && <div className="sort__popup">
                 <ul>
-                    {list.map((value)=>(<li key ={value} onClick={()=>useCategories(value)}>{value}</li>))}
+                    {list.map((value)=>(<li key={value} onClick={()=>{
+                        useCategories(value)
+                    }}>{value}</li>))}
                 </ul>
             </div>}
         </div>

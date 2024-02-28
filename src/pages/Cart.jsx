@@ -24,7 +24,7 @@ const Cart = () => {
                 <span>Очистить корзину</span>
               </div>
             </div>
-            <div class="content__items">
+            <div class="content_items">
               <div class="cart__item">
                 <div class="cart__item-img">
                   <img class="pizza-block__image"
