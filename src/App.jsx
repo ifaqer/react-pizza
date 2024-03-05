@@ -9,7 +9,7 @@ import Cart from "./pages/Cart"
 import NotFound from './pages/NotFound'
 
 export const SearchContext = React.createContext('')
-
+console.log(SearchContext)
 export default function App() {
   const [search, setSearch] = React.useState('')
   return (
