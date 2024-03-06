@@ -1,6 +1,9 @@
 import React from 'react'
 import Axios from "axios"
 
+import {useSelector, useDispatch} from "react-redux"
+import {setCategoryId} from "../redux/slices/filterSlice"
+
 import Sorted from '../components/Sorted'
 import Categories from '../components/Categories'
 import PizzaBlock from '../components/PizzaBlock'
@@ -9,15 +12,20 @@ import Pagination from '../components/Pagination'
 import {SearchContext} from "../App"
 
 export default function Home(){
-
-    const [enterCategories, setEnterCategories] = React.useState(0)
-    const [enterSorted, setEnterSorted] = React.useState('rating')
+    // const [enterCategories, setEnterCategories] = React.useState(0) - заменили на Redux
+    // const [enterSorted, setEnterSorted] = React.useState('rating') - заменили на Redux
     const {search, setSearch} = React.useContext(SearchContext)
-
     const [pizzas, setPizzas] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
 
-    const data = ( enterCategories ? `&category=` + enterCategories + `&sortby=` + enterSorted : `&sortby=` + enterSorted )
+    const categoryId = useSelector((state)=>state.filter.categoryId)
+    const enterSorted = useSelector((state)=>state.filter.sort.sortProperty)
+    const dispatch = useDispatch()
+    const onChangeCategory = (id) => {
+        dispatch(setCategoryId(id))
+    }
+
+    const data = ( categoryId ? `&category=` + categoryId + `&sortby=` + enterSorted : `&sortby=` + enterSorted )
     const [pages, setPages] = React.useState(1)
 
     React.useEffect(()=>{
@@ -26,13 +34,13 @@ export default function Home(){
             setPizzas(obj.data)
             setIsLoading(false)
         })
-    }, [enterCategories, enterSorted, pages])
+    }, [categoryId, enterSorted, pages])
 
   return (
     <>
     <div className="content__top">
-        <Categories enterCategories={enterCategories} setEnterCategories={setEnterCategories}/>
-        <Sorted setEnterSorted={setEnterSorted}/>
+        <Categories categoryId={categoryId} onChangeCategory={onChangeCategory}/>
+        <Sorted/>
     </div>
     <h2 className="content__title">Все пиццы</h2>
     <div className="content__items">

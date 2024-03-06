@@ -1,17 +1,21 @@
 import React from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { setSort } from "../redux/slices/filterSlice"
 
-export default function Sorted({setEnterSorted}){
+export default function Sorted(){
+
+    const dispatch = useDispatch()
+    const {sortName, sortProperty} = useSelector((state)=>state.filter.sort)
     const [open, setOpen] = React.useState(false)
     const list = [
-        {name: "популярности", sortProperty: "rating"},
-        {name: "цене", sortProperty: "price"},
-        {name: "алфавиту", sortProperty: "title"}
+        {sortName: "популярности", sortProperty: "rating"},
+        {sortName: "цене", sortProperty: "price"},
+        {sortName: "алфавиту", sortProperty: "title"}
     ]
-    const [categories, setCategories] = React.useState(list[0].name)
-
+    const [categories, setCategories] = React.useState(list[0].sortName)
     const useCategories  = (value) =>  {
-        setEnterSorted(value.sortProperty)
-        setCategories(value.name)
+        dispatch(setSort(value))
+        setCategories(value.sortName)
         setOpen(!open)
     }
     return(
@@ -36,7 +40,7 @@ export default function Sorted({setEnterSorted}){
                 <ul>
                     {list.map((value, index)=>(<li key={index} onClick={()=>{
                         useCategories(value)
-                    }}>{value.name}</li>))}
+                    }}>{value.sortName}</li>))}
                 </ul>
             </div>}
         </div>
