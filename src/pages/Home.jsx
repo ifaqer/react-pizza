@@ -1,5 +1,7 @@
 import React from 'react'
 import Axios from "axios"
+import qs from "qs"
+import { useNavigate } from 'react-router-dom'
 
 import {useSelector, useDispatch} from "react-redux"
 import {setCategoryId} from "../redux/slices/filterSlice"
@@ -12,8 +14,6 @@ import Pagination from '../components/Pagination'
 import {SearchContext} from "../App"
 
 export default function Home(){
-    // const [enterCategories, setEnterCategories] = React.useState(0) - заменили на Redux
-    // const [enterSorted, setEnterSorted] = React.useState('rating') - заменили на Redux
     const {search, setSearch} = React.useContext(SearchContext)
     const [pizzas, setPizzas] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
@@ -21,12 +21,21 @@ export default function Home(){
     const categoryId = useSelector((state)=>state.filter.categoryId)
     const enterSorted = useSelector((state)=>state.filter.sort.sortProperty)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const onChangeCategory = (id) => {
         dispatch(setCategoryId(id))
     }
 
     const data = ( categoryId ? `&category=` + categoryId + `&sortby=` + enterSorted : `&sortby=` + enterSorted )
     const [pages, setPages] = React.useState(1)
+    
+    React.useEffect(()=>{
+        if (window.location.search){
+            const params = qs.parse(window.location.search.substring(1))
+            navigate(`${params}`)
+            console.log(params)
+        }
+    }, [])
 
     React.useEffect(()=>{
         setIsLoading(true)
@@ -34,6 +43,15 @@ export default function Home(){
             setPizzas(obj.data)
             setIsLoading(false)
         })
+    }, [categoryId, enterSorted, pages])
+    
+    React.useEffect(()=>{
+        const queryString = qs.stringify({
+            sortProperty: enterSorted,
+            categoryId: categoryId,
+            pages: pages,
+        })
+        navigate(`?${queryString}`)
     }, [categoryId, enterSorted, pages])
 
   return (
